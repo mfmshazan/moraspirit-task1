@@ -1,6 +1,7 @@
 import type { AvailabilityResult } from '../types';
 import { StatusBadge } from './StatusBadge';
 import { SpinnerInline } from './Skeleton';
+import { formatLongDate } from '../lib/format';
 
 interface Props {
   status: 'idle' | 'loading' | 'success' | 'error';
@@ -17,7 +18,6 @@ export function AvailabilityPanel({ status, result, error }: Props) {
     >
       {status === 'idle' && (
         <div className="text-center text-gray-400 py-8 px-6">
-          <p className="text-3xl mb-2" aria-hidden="true">📅</p>
           <p className="text-sm">Select a member and a date, then click <strong className="text-gray-600">Check Availability</strong>.</p>
         </div>
       )}
@@ -51,12 +51,7 @@ export function AvailabilityPanel({ status, result, error }: Props) {
                 {result.role} · <span className="font-mono">{result.id}</span>
               </p>
               <p className="text-xs text-gray-500 mt-1">
-                {new Date(result.requested_date + 'T00:00:00').toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {formatLongDate(result.requested_date)}
               </p>
             </div>
             <StatusBadge status={result.status} />

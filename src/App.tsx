@@ -5,6 +5,7 @@ import { useAvailability } from './hooks/useAvailability';
 import { MemberGrid } from './components/MemberGrid';
 import { AvailabilityPanel } from './components/AvailabilityPanel';
 import { ErrorState } from './components/ErrorState';
+import { DatePicker } from './components/DatePicker';
 
 const today = new Date().toISOString().split('T')[0];
 
@@ -20,8 +21,8 @@ export default function App() {
     reset();
   };
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDate(e.target.value);
+  const handleDateChange = (value: string) => {
+    setDate(value);
     reset();
   };
 
@@ -103,21 +104,7 @@ export default function App() {
             </div>
 
             {/* Date picker */}
-            <div>
-              <label
-                htmlFor="date-input"
-                className="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wide"
-              >
-                Date
-              </label>
-              <input
-                id="date-input"
-                type="date"
-                value={date}
-                onChange={handleDateChange}
-                className="px-3 py-2.5 rounded-lg border border-gray-300 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent h-[42px]"
-              />
-            </div>
+            <DatePicker value={date} onChange={handleDateChange} />
 
             {/* Check button */}
             <button
