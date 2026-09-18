@@ -5,6 +5,7 @@ import { useAvailability } from './hooks/useAvailability';
 import { MemberGrid } from './components/MemberGrid';
 import { AvailabilityPanel } from './components/AvailabilityPanel';
 import { ErrorState } from './components/ErrorState';
+import { EmptyState } from './components/EmptyState';
 import { DatePicker } from './components/DatePicker';
 
 const today = new Date().toISOString().split('T')[0];
@@ -67,6 +68,12 @@ export default function App() {
 
           {membersError ? (
             <ErrorState message={membersError} onRetry={retry} />
+          ) : !membersLoading && members.length === 0 ? (
+            <EmptyState
+              title="No members found"
+              message="The directory is empty right now. Try refreshing to fetch the latest list."
+              onRefresh={retry}
+            />
           ) : (
             <MemberGrid
               members={members}
